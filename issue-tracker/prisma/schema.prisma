@@ -9,3 +9,22 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Issue {
+  // every issue needs an ID. Type of ID should be an integer. Use @id to specify it's an ID column and the @default 
+  // attribute to auto increment so every time a record is added, an id is automatically assigned to the record
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255) // varchar(191) -- store string values up to 191 characters is the default
+  description String   @db.Text
+  status      Status   @default(OPEN) // default OPEN when issue is created
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt // every time an issue record is updated, the db engine updates the column
+}
+
+// enum is supported in MySQL but might not be in all databases, so check with Prisma documentation first to see if supported
+// enum is a set of constant values (all capital letters, no commas to separate)
+enum Status {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
