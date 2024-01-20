@@ -4,7 +4,7 @@ import prisma from "@/prisma/client";
 
 
 // In the Issue model in the schema.prisma, every attribute has a default value except for title and description,
-// so we add them here
+// so we add them here. This is using zod
 const createIssueSchema = z.object({
     title: z.string().min(1).max(255),
     description: z.string().min(1)
@@ -17,7 +17,8 @@ export async function POST(request: NextRequest) {
     if (!validation.success) // checking if the validation was successful
         return NextResponse.json(validation.error.errors, { status: 400}); // the status 400 means that it was an invalid request
     
-    const newIssue = await prisma.issue.create({
+    const newIssue = await prisma.issue.create({ // to actually POST/Create a new issue (using PostMan), the app needs to be 
+        // running on the web, using npm run dev, or it will result in an error and not POST the issue
         data: { title: body.title, description: body.description}
     });
 

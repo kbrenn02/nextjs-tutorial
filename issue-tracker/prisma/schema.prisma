@@ -1,6 +1,14 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// npm i prisma to install prisma in the environment (use the latest version and read the documentation)
+// npx prisma init to initailize prisma
+// npx prisma format to format the model we created below (auto adjusts spacing)
+// npx prisma migrate dev creates the database that information will be stored too
+    // before running this command, the schema is set up, but not the database. This creates the prisma/migrations folder
+    // and installs the @prisma/client package
+// npm i zod. Zod is used to create a schema blueprint for the data you want to validate (see route.ts for where zod is used)
+
 generator client {
   provider = "prisma-client-js"
 }
