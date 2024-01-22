@@ -1,16 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { z } from 'zod';
 import prisma from "@/prisma/client";
+import { createIssueSchema } from "../../validationSchemas";
 
-
-// In the Issue model in the schema.prisma, every attribute has a default value except for title and description,
-// so we add them here. This is using zod
-// If we look at the Issue model in the schema.prisma file, we only need info for title and description because all the
-// rest have default values
-const createIssueSchema = z.object({
-    title: z.string().min(1, 'Title is required.').max(255), // string with a minimum of 1 character and a max of 255 characters
-    description: z.string().min(1, 'Description is required.') // string with a minimum of 1 character
-})
 
 export async function POST(request: NextRequest) {
     const body = await request.json(); // request.json() returns a promise, so we 
