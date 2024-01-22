@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { createIssueSchema } from '@/app/validationSchemas';
 import { z } from 'zod';
+import ErrorMessage from '@/app/components/ErrorMessage';
 
 type IssueForm = z.infer<typeof createIssueSchema>;
 
@@ -43,15 +44,17 @@ const NewIssuePage = () => {
                 <TextField.Root>
                     <TextField.Input placeholder='Title' {...register('title')}/>
                 </TextField.Root>
-                {errors.title && <Text color="red" as="p">{errors.title.message}</Text>} {/* if errors.title is truthy, then the 
-                Text container will show, with the text of the error message*/}
+                  <ErrorMessage>
+                    {errors.title?.message}
+                  </ErrorMessage>
                 <Controller 
                     name="description"
                     control={control}
                     render={({ field }) => <SimpleMDE placeholder='Description' {...field}/>}
                 />
-                {errors.description && <Text color="red" as="p">{errors.description.message}</Text>} {/* the "as='p'" means
-                that we want this error to show up as a paragraph element. This helps with how the text is shown */}
+                  <ErrorMessage> {/* the ? after the description says to show it if that is a parameter that exists - optional */}
+                    {errors.description?.message} 
+                  </ErrorMessage>
                 <Button>Submit New Issue</Button>
             </form>
         </div>
